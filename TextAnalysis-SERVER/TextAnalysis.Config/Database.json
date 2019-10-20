@@ -1,0 +1,9 @@
+{
+  "user": "nodejs",
+  "password": "nodejsServer",
+  "server": "localhost",
+  "requestTimeout": 1200000,
+  "options": {
+    "database": "SadnaProject"
+  }
+}

@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('textanalysis.server:server');
+var debug = require('debug')('textanalysis-server:server');
 var http = require('http');
 
 /**
@@ -82,6 +82,7 @@ function onError(error) {
  */
 
 function onListening() {
+  console.log('Start listen on port: ' + port)
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr

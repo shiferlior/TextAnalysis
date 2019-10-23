@@ -20,12 +20,10 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  createDoc(loadDocForm: NgForm) :void {
-    console.log("111" + loadDocForm);
+  createDoc(loadDocForm: NgForm): void {
     this.textSerice.CreateText(loadDocForm.value)
-        .subscribe(res => {
-          alert(res);
-        });
-    
+      .subscribe(res => {
+        alert(res.title);
+      });
   }
 }

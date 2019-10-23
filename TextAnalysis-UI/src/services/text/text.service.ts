@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Text } from './text';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, from } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class TextService {
 
   // POST
   CreateText(data): Observable<Text> {
-    return this.http.post<Text>(this.baseurl + '/Texttracking/', JSON.stringify(data), this.httpOptions)
+    return this.http.post<Text>(this.baseurl + '/text/', JSON.stringify(data), this.httpOptions)
     .pipe(
       retry(1),
       catchError(this.errorHandl)

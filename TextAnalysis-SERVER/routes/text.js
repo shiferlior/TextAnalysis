@@ -22,18 +22,22 @@ router.get('/findByMetaData/:key/:value', asyncHandler(async (req, res, next) =>
     .input('attributeValue', sql.NVarChar(250), req.params.value)
     .execute('[dbo].[FindTextByMetaData_sp]');
   res.send(result.recordset);
-  sql.close();
 }));
 
-router.post('/:id/metadate', asyncHandler(async (req, res, next) => {
+router.post('/:id/addMetadata', asyncHandler(async (req, res, next) => {
+  try{
   let pool = await sql.connect(dbConfig);
   let result = await pool.request()
     .input('textid', sql.INT, req.params.id)
     .input('key', sql.NVarChar(50), req.body.key)
     .input('value', sql.NVarChar(250), req.body.value)
     .execute('[dbo].[AddTextMetaData_sp]');
-  res.send(result.recordset);//TODO: find the RETURN @RESULT
-  sql.close();
+    res.send({ returnValue: result.returnValue});
+  } catch(err) {
+    res.status(409).send({ returnValue: err});
+  } finally {
+    sql.close();
+  }
 }));
 
 
@@ -105,6 +109,7 @@ async function putDb(title, text) {
     pool.close();
   } catch (err) {
     console.error(err);
+    pool.close();
   }
 }
 

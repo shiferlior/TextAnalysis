@@ -8,6 +8,7 @@ var sql = require('mssql');
 
 var indexRouter = require('./routes/index');
 var textRouter = require('./routes/text');
+var phraseRouter = require('./routes/phrase');
 
 var app = express();
 app.use(cors());
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/text', textRouter);
+app.use('/phrase', phraseRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

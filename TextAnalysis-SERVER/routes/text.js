@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
-//const sql = require('mssql');
+const sql = require('mssql');
 //const dbConfig = require('../TextAnalysis.Config/Database');
 const db = require('../TextAnalysis.DAL/mssqlProvider');
 const http = require("http");
 const url = "https://www.gutenberg.org/files/98/98-0.txt";
-const asyncHandler = require('express-async-handler')
+const asyncHandler = require('express-async-handler');
 
 router.get('/', asyncHandler(async (req, res, next) => {
   let result = await db.runProc('[dbo].[GetAllTexts_sp]');
   res.send({ recordset: result.recordset });
 }));
 
-router.get('/:id', asyncHandler(async (req, res, next) => {
+router.get('/:id/AllPhrases', asyncHandler(async (req, res, next) => {
   let result = await db.runProc('[dbo].[GetAllPhrasesInAText_sp]',[
     ['textid', sql.INT, req.params.id]
   ]);

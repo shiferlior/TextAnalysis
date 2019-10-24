@@ -31,17 +31,17 @@ export class TextService {
   }  
 
   // GET
-  GetIssue(id): Observable<Text> {
-    return this.http.get<Text>(this.baseurl + '/Texttracking/' + id)
+  GetTexts(): Observable<{"recordset": [Text]}> {
+    return this.http.get<{"recordset": [Text]}>(this.baseurl + '/text/')
     .pipe(
       retry(1),
       catchError(this.errorHandl)
-    )
+    );
   }
 
   // GET
-  GetIssues(): Observable<Text> {
-    return this.http.get<Text>(this.baseurl + '/Texttracking/')
+  GetTextsByPhrase(phrase): Observable<{"recordset": [Text]}> {
+    return this.http.get<{"recordset": [Text]}>(this.baseurl + '/text/findByPhrase/' + phrase)
     .pipe(
       retry(1),
       catchError(this.errorHandl)

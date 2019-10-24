@@ -1,0 +1,43 @@
+<form #getTextForm="ngForm" (ngSubmit)="findByPhrase(getTextForm)">
+
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <p class="alignright"><label for="phrase">:ביטוי</label></p>
+                            <input id="phrase" name="phrase" [(ngModel)]="phrase" class="form-control" type="text">
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary" >צור מסמך</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Total words</th>
+            <th scope="col">button1</th>
+            <th scope="col">button2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let text of texts">
+            <td>{{ text.id }}</td>
+            <td>{{ text.title }}</td>
+            <td>{{ text.totalWords }}</td>
+            <td><a [routerLink]="['/edit', text.id]" class="btn btn-primary">Edit</a></td>
+            <td><a (click)="deletetext(text.id)" class="btn btn-danger">Delete</a>
+        </tr>
+    </tbody>
+</table>

@@ -3,11 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
+import { TextsComponent } from './texts/texts.component';
 
 
 const routes: Routes = [
   { path: 'loadText', component: HomeComponent },
-  { path: '', redirectTo: '/loadText', pathMatch: 'full' },
+  { path: 'getTexts', component: TextsComponent },
+  { path: '', redirectTo: '/getTexts', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 

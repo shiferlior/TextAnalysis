@@ -10,12 +10,14 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FormsModule } from '@angular/forms';
 import { TextService } from '../services/text/text.service';
+import { TextsComponent } from './texts/texts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    TextsComponent
   ],
   imports: [
     FormsModule,

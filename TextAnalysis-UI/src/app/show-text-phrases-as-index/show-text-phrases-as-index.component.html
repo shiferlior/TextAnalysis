@@ -1,0 +1,39 @@
+<form [formGroup]=textPhrasesForm (ngSubmit)="findByText(textPhrasesForm.value)">
+        <div style="margin-top: 3ex;" class="container">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="alignright"><label for="textId">:לפי מזהה טקסט</label></p>
+                            <input id="textId" formControlName="textId" class="form-control" type="number">
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">חפש</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <table style="margin-top: 3ex;" class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Text id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Total words</th>
+                <th scope="col">button1</th>
+                <th scope="col">button2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let phrase of phrases">
+                <td>{{ text.id }}</td>
+                <td>{{ text.title }}</td>
+                <td>{{ text.totalWords }}</td>
+                <td><a [routerLink]="['/edit', text.id]" class="btn btn-primary">Edit</a></td>
+                <td><a (click)="deletetext(text.id)" class="btn btn-danger">Delete</a>
+            </tr>
+        </tbody>
+    </table>

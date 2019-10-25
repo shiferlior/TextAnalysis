@@ -1,0 +1,24 @@
+<form [formGroup]=locationPhraseForm (ngSubmit)="findPhrase(locationPhraseForm.value)">
+        <div class="container" style="margin-top: 3ex;">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="alignright"><label for="textId">:איתור מילה לפי המיקום שלה</label></p>
+                            <input id="textId" formControlName="textId" style="margin-top: 2ex;" class="form-control"
+                                type="text" dir="rtl" placeholder="מזהה הטקסט">
+                            <input id="lineNum" formControlName="lineNum" style="margin-top: 2ex;"
+                                class="form-control" type="number" dir="rtl" placeholder="שורה בטקסט">
+                            <input id="locationInLine" formControlName="locationInLine" style="margin-top: 2ex;"
+                                class="form-control" type="number" dir="rtl" placeholder="מיקום בשורה">
+                        </div>
+    
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">חפש</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>

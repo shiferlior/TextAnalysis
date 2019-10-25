@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  search(loadDocForm: NgForm): void {
+  createDoc(loadDocForm: NgForm): void {
     this.textSerice.CreateText(loadDocForm.value)
       .subscribe(res => {
         alert(res.title);

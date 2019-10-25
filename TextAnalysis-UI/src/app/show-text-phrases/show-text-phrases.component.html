@@ -1,23 +1,13 @@
-<form [formGroup]=getTextForm (ngSubmit)="findByPhrase(getTextForm.value)">
+<form [formGroup]=textPhrasesForm (ngSubmit)="findByText(textPhrasesForm.value)">
     <div style="margin-top: 3ex;" class="container">
         <div class="row">
             <div class="col"></div>
             <div class="col-10">
                 <div class="card">
                     <div class="card-body">
-                        <div *ngIf='isByPhrase'>
-                            <p class="alignright"><label for="phrase">:לפי ביטוי</label></p>
-                            <input id="phrase" formControlName="phrase" class="form-control" type="text" dir="rtl" placeholder="הביטוי">
-                        </div>
-                        <div *ngIf='!isByPhrase'>
-                            <p class="alignright"><label for="subjectKey">:לפי נתון מובנה</label></p>
-                            <input id="subjectKey" formControlName="subjectKey" class="form-control" type="text" dir="rtl" placeholder="שם השדה">
-                            <input id="subjectValue" formControlName="subjectValue" class="form-control" type="text" dir="rtl" placeholder="ערך השדה">
-                        </div>
-                        <button (click)="switchSearch()" style="margin-top: 3ex;" type="button">שנה לפי {{labelText}}</button>
-
+                        <p class="alignright"><label for="textId">:לפי מזהה טקסט</label></p>
+                        <input id="textId" formControlName="textId" class="form-control" type="number">
                     </div>
-
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">חפש</button>
                     </div>
@@ -38,7 +28,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let text of texts">
+        <tr *ngFor="let phrase of phrases">
             <td>{{ text.id }}</td>
             <td>{{ text.title }}</td>
             <td>{{ text.totalWords }}</td>

@@ -25,7 +25,6 @@ export class TextService {
   CreateText(data): Observable<Text> {
     return this.http.post<Text>(this.baseurl + '/text/', JSON.stringify(data), this.httpOptions)
     .pipe(
-      retry(1),
       catchError(this.errorHandl)
     )
   }  

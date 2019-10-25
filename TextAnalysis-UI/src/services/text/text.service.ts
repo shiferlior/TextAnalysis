@@ -48,6 +48,15 @@ export class TextService {
     )
   }
 
+  // GET
+  GetTextsByMetadata(subjectKey:string,subjectValue:string): Observable<{"recordset": [Text]}> {
+    return this.http.get<{"recordset": [Text]}>(this.baseurl + '/text/findByMetadata/' + subjectKey +'/' + subjectValue)
+    .pipe(
+      retry(1),
+      catchError(this.errorHandl)
+    )
+  }
+
   // PUT
   UpdateText(id, data): Observable<Text> {
     return this.http.put<Text>(this.baseurl + '/Texttracking/' + id, JSON.stringify(data), this.httpOptions)

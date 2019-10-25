@@ -1,19 +1,25 @@
-<form #getTextForm="ngForm" (ngSubmit)="findByPhrase(getTextForm)">
-
+<form [formGroup]=getTextForm (ngSubmit)="findByPhrase(getTextForm.value)">
     <div class="container">
         <div class="row">
             <div class="col"></div>
-            <div class="col-8">
+            <div class="col-10">
                 <div class="card">
                     <div class="card-body">
-                        <div class="form-group">
-                            <p class="alignright"><label for="phrase">:ביטוי</label></p>
-                            <input id="phrase" name="phrase" [(ngModel)]="phrase" class="form-control" type="text">
+                        <div *ngIf='isByPhrase'>
+                            <p class="alignright"><label for="phrase">:לפי ביטוי</label></p>
+                            <input id="phrase" formControlName="phrase" class="form-control" type="text" dir="rtl" placeholder="הביטוי">
                         </div>
+                        <div *ngIf='!isByPhrase'>
+                            <p class="alignright"><label for="subjectKey">:לפי נתון מובנה</label></p>
+                            <input id="subjectKey" formControlName="subjectKey" class="form-control" type="text" dir="rtl" placeholder="שם השדה">
+                            <input id="subjectValue" formControlName="subjectValue" class="form-control" type="text" dir="rtl" placeholder="ערך השדה">
+                        </div>
+                        <button (click)="switchSearch()" type="button">שנה לפי {{labelText}}</button>
+
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary" >צור מסמך</button>
+                        <button type="submit" class="btn btn-primary">חפש</button>
                     </div>
                 </div>
             </div>
@@ -24,7 +30,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th scope="col">#id</th>
+            <th scope="col">Text id</th>
             <th scope="col">Title</th>
             <th scope="col">Total words</th>
             <th scope="col">button1</th>

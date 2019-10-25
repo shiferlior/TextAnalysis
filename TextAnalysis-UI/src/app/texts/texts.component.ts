@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TextService } from '../../services/text/text.service';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Text } from '../../services/text/text';
 
 @Component({
   selector: 'app-texts',
@@ -8,40 +9,52 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./texts.component.css']
 })
 export class TextsComponent implements OnInit {
-  phrase;
-  texts;
-  //  = [
-  //   {
-  //     "id": 4,
-  //     "title": "CheckLior",
-  //     "totalWords": 0,
-  //     "totalRows": 0,
-  //     "totalCharacters": 0
-  //   },
-  //   {
-  //     "id": 5,
-  //     "title": "CheckLior2",
-  //     "totalWords": 0,
-  //     "totalRows": 0,
-  //     "totalCharacters": 0
-  //   }
-  // ];
+  getTextForm: FormGroup;
+  texts: [Text];
+  isByPhrase: boolean;
+  labelText: string;
 
-  constructor(public textSerice: TextService) { }
+
+  constructor(private textSerice: TextService,
+    private formBuilder: FormBuilder) {
+    this.isByPhrase = true;
+    this.labelText = 'נתון מובנה';
+  }
 
   ngOnInit() {
+    this.getTextForm = this.formBuilder.group({
+      phrase: '',
+      subjectKey: '',
+      subjectValue: ''
+    });
+
     this.textSerice.GetTexts()
       .subscribe(res => {
         this.texts = res.recordset;
       });
   }
 
-  findByPhrase(phrase: NgForm): void {
-    console.log('a: ' + JSON.stringify(phrase.value.phrase));
-    this.textSerice.GetTextsByPhrase(phrase.value.phrase)
-      .subscribe(res => {
-        this.texts = res.recordset;
-      });
+  switchSearch() {
+    this.isByPhrase = !this.isByPhrase;
+    this.labelText = this.isByPhrase ? 'נתון מובנה' : 'ביטוי';
+
+  }
+
+  findByPhrase(getTextForm): void {
+    console.log(222);
+    console.log('a: ' + JSON.stringify(getTextForm));
+    if (this.isByPhrase) {
+      this.textSerice.GetTextsByPhrase(getTextForm.phrase)
+        .subscribe(res => {
+          this.texts = res.recordset;
+        });
+    }
+    else {
+      this.textSerice.GetTextsByMetadata(getTextForm.subjectKey,getTextForm.subjectValue)
+        .subscribe(res => {
+          this.texts = res.recordset;
+        });
+    }
   }
 
 }

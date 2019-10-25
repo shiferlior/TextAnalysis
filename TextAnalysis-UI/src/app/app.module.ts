@@ -11,6 +11,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { FormsModule } from '@angular/forms';
 import { TextService } from '../services/text/text.service';
 import { TextsComponent } from './texts/texts.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import { TextsComponent } from './texts/texts.component';
     NgbModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [TextService],
   bootstrap: [AppComponent]

@@ -26,7 +26,7 @@ router.get('/findByPhrase/:phrase', asyncHandler(async (req, res, next) => {
   res.send({ recordset: result.recordset });
 }));
 
-router.get('/findByMetaData/:key/:value', asyncHandler(async (req, res, next) => {
+router.get('/findByMetadata/:key/:value', asyncHandler(async (req, res, next) => {
   let result = await db.runProc('[dbo].[GetTextByMetaData_sp]', [
     ['attributeKey', sql.NVarChar(50), req.params.key],
     ['attributeValue', sql.NVarChar(250), req.params.value]

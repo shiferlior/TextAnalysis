@@ -1,1 +1,19 @@
-<p>linguistic-expression works!</p>
+<form [formGroup]=lingusticExpressionForm (ngSubmit)="searchPhrase(lingusticExpressionForm.value)">
+    <div class="container" style="margin-top: 3ex;">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="alignright"><label for="lingusticExpression">:ביטוי לשוני</label></p>
+                        <input id="lingusticExpression" formControlName="lingusticExpression" style="margin-top: 2ex;"
+                            class="form-control" type="text" dir="rtl" placeholder="ביטוי לשוני">
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">חפש</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

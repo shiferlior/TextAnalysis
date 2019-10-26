@@ -1,1 +1,41 @@
-<p>show-phrases-group works!</p>
+<form [formGroup]=phrasesGroupForm (ngSubmit)="showPhrasesGroup(phrasesGroupForm.value)">
+    <div style="margin-top: 3ex;" class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="alignright"><label for="textId">חיפוש קבוצת מילים שהוגדרה:</label></p>
+                        <input id="phrasesGroupId" formControlName="phrasesGroupId" style="margin-top: 2ex;"
+                            class="form-control" type="number" placeholder="מזהה קבוצה">
+                        <input id="textId" formControlName="textId" style="margin-top: 2ex;" class="form-control"
+                            type="number" placeholder="מזהה טקסט">
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">חפש</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<table style="margin-top: 3ex;" class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Text id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Total words</th>
+            <th scope="col">button1</th>
+            <th scope="col">button2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let phrase of phrases">
+            <td>{{ phrase.id }}</td>
+            <td>{{ phrase.title }}</td>
+            <td><a [routerLink]="['/edit', phrase.id]" class="btn btn-primary">Edit</a></td>
+            <td><a (click)="deletetext(phrase.id)" class="btn btn-danger">Delete</a>
+        </tr>
+    </tbody>
+</table>

@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PhrasesGroupComponent } from './phrases-group.component';
 
 describe('PhrasesGroupComponent', () => {

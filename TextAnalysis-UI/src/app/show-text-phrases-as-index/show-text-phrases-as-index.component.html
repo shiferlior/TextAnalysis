@@ -5,9 +5,11 @@
                 <div class="col-10">
                     <div class="card">
                         <div class="card-body">
-                            <p class="alignright"><label for="textId">:לפי מזהה טקסט</label></p>
-                            <input id="textId" formControlName="textId" class="form-control" type="number">
+                            <p class="alignright"><label for="textId">:הצגת המילים כאינדקס</label></p>
+                            <input placeholder="מילה" dir="rtl" style="margin-top: 2ex;" id="phrase" formControlName="phrase" class="form-control" type="text">
+                            <input placeholder="מזהה טקסט" dir="rtl" style="margin-top: 2ex;" id="textId" formControlName="textId" class="form-control" type="number">
                         </div>
+                        
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary">חפש</button>
                         </div>
@@ -20,20 +22,24 @@
     <table style="margin-top: 3ex;" class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Text id</th>
-                <th scope="col">Title</th>
-                <th scope="col">Total words</th>
-                <th scope="col">button1</th>
-                <th scope="col">button2</th>
+                <th scope="col">Phrase id</th>
+                <th scope="col">Phrase content</th>
+                <th scope="col">Text id of phrase</th>
+                <th scope="col">Row number in text</th>
+                <th scope="col">Word number in row</th>
+                <th scope="col">Chracter number in text</th>
+                <th scope="col">Word number in text</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let phrase of phrases">
                 <td>{{ phrase.id }}</td>
-                <td>{{ phrase.title }}</td>
-                <td>{{ phrase.totalWords }}</td>
-                <td><a [routerLink]="['/edit', phrase.id]" class="btn btn-primary">Edit</a></td>
-                <td><a (click)="deletetext(phrase.id)" class="btn btn-danger">Delete</a>
+                <td>{{ phrase.phrase }}</td>
+                <td>{{ phrase.textId }}</td>
+                <td>{{ phrase.rowInText }}</td>
+                <td>{{ phrase.locationInRow }}</td>
+                <td>{{ phrase.locationFromStart }}</td>
+                <td>{{ phrase.wordNumberInText }}</td>
             </tr>
         </tbody>
     </table>

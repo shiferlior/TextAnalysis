@@ -21,8 +21,7 @@
     <thead>
         <tr>
             <th scope="col">Text id</th>
-            <th scope="col">Title</th>
-            <th scope="col">Total words</th>
+            <th scope="col">phrase</th>
             <th scope="col">button1</th>
             <th scope="col">button2</th>
         </tr>
@@ -30,8 +29,7 @@
     <tbody>
         <tr *ngFor="let phrase of phrases">
             <td>{{ phrase.id }}</td>
-            <td>{{ phrase.title }}</td>
-            <td>{{ phrase.totalWords }}</td>
+            <td>{{ phrase.phrase }}</td>
             <td><a [routerLink]="['/edit', phrase.id]" class="btn btn-primary">Edit</a></td>
             <td><a (click)="deletetext(phrase.id)" class="btn btn-danger">Delete</a>
         </tr>

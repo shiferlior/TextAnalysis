@@ -9,6 +9,10 @@ var sql = require('mssql');
 var indexRouter = require('./routes/index');
 var textRouter = require('./routes/text');
 var phraseRouter = require('./routes/phrase');
+var definedPhraseRouter = require('./routes/definedPhrase');
+var definedWordsGroupRouter = require('./routes/definedWordsGroup');
+var statsRouter = require('./routes/stats');
+
 
 var app = express();
 app.use(cors());
@@ -25,6 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/text', textRouter);
 app.use('/phrase', phraseRouter);
+app.use('/definedPhrase', definedPhraseRouter);
+app.use('/definedWordsGroup', definedWordsGroupRouter);
+app.use('/stats', statsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -39,7 +46,9 @@ app.use(function(err, req, res, next) {
   sql.close();
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  if(err)
+    console.error(err);
+  res.send({message: err.message});
 });
 
 module.exports = app;

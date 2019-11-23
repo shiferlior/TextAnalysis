@@ -6,7 +6,7 @@
                     <div class="card">
                         <div class="card-body">
                             <p class="alignright"><label for="lingusticExpression">:קבוצות של מילים בעלי משמעות מיוחדת</label></p>
-                            <input id="phrasesGroup" formControlName="phrasesGroup" style="margin-top: 2ex;"
+                            <input id="groupName" formControlName="groupName" style="margin-top: 2ex;"
                                 class="form-control" type="text" dir="rtl" placeholder="שם הקבוצה">
                         </div>
                         <div class="card-footer">
@@ -32,8 +32,8 @@
         <tbody>
             <tr *ngFor="let phrasesGroup of phrasesGroups">
                 <td>{{ phrasesGroup.id }}</td>
-                <td>{{ phrasesGroup.title }}</td>
-                <td>{{ phrasesGroup.totalWords }}</td>
+                <td>{{ phrasesGroup.name }}</td>
+                <td>{{ phrasesGroup.phraseCount }}</td>
                 <td><a [routerLink]="['/edit', phrasesGroup.id]" class="btn btn-primary">Edit</a></td>
                 <td><a (click)="deletetext(phrasesGroup.id)" class="btn btn-danger">Delete</a>
             </tr>

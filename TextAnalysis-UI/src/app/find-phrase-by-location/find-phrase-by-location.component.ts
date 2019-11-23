@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TextService } from '../../services/text/text.service';
+import { PhraseService } from 'src/services/phrase/phrase.service';
+import { Phrase } from 'src/services/phrase/phrase';
 
 @Component({
   selector: 'app-find-phrase-by-location',
@@ -9,19 +11,22 @@ import { TextService } from '../../services/text/text.service';
 })
 export class FindPhraseByLocationComponent implements OnInit {
   locationPhraseForm: FormGroup;
+  phrases: [Phrase];
   constructor(
-    private textSerice: TextService,
+    private phraseSerice: PhraseService,
     private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.locationPhraseForm = this.formBuilder.group({
-      textId: 0,
-      lineNum: 0,
-      locationInLine: 0
+      textId: null,
+      rowNum: null,
+      wordInRow: null
     });
   }
 
-  findPhrase(locationPhrase){
-    //TODO: add the this.textService
+  findPhrase(locationPhrase: { textId: number, rowNum: number, wordInRow: number }) {
+    this.phraseSerice.getPhraseByRowLocation(locationPhrase).subscribe(res => {
+      this.phrases = res.recordset;
+    });
   }
 }

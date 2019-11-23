@@ -28,7 +28,7 @@ export class TextsComponent implements OnInit {
       subjectValue: ''
     });
 
-    this.textSerice.GetTexts()
+    this.textSerice.getTexts()
       .subscribe(res => {
         this.texts = res.recordset;
       });
@@ -41,16 +41,14 @@ export class TextsComponent implements OnInit {
   }
 
   findByPhrase(getTextForm): void {
-    console.log(222);
-    console.log('a: ' + JSON.stringify(getTextForm));
     if (this.isByPhrase) {
-      this.textSerice.GetTextsByPhrase(getTextForm.phrase)
+      this.textSerice.getTextsByPhrase(getTextForm.phrase)
         .subscribe(res => {
           this.texts = res.recordset;
         });
     }
     else {
-      this.textSerice.GetTextsByMetadata(getTextForm.subjectKey,getTextForm.subjectValue)
+      this.textSerice.getTextsByMetadata(getTextForm.subjectKey, getTextForm.subjectValue)
         .subscribe(res => {
           this.texts = res.recordset;
         });

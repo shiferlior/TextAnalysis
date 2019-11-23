@@ -1,1 +1,61 @@
-<p>statistical-data works!</p>
+<form [formGroup]=phraseStatsForm (ngSubmit)="findStatsByPhrase(phraseStatsForm.value)">
+    <div style="margin-top: 3ex;" class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="alignright"><label for="phrase">:סטטיסטיקה לפי ביטוי</label></p>
+                        <input id="phrase" formControlName="phrase" class="form-control" type="text" dir="rtl"
+                            placeholder="ביטוי">
+                    </div>
+                    <div class="card-footer">
+                        {{phraseStats}}
+                        <button type="submit" class="btn btn-primary">חפש</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form [formGroup]=rowStatsForm (ngSubmit)="findStatsByRowLocation(rowStatsForm.value)">
+    <div style="margin-top: 3ex;" class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="alignright"><label for="textId">:סטטיסטיקה לפי שורה בטקסט</label></p>
+                        <input id="textId" formControlName="textId" class="form-control" type="number" dir="rtl"
+                            placeholder="מזהה טקסט">
+                        <input id="rowNum" formControlName="rowNum" style="margin-top: 2ex;" class="form-control"
+                            type="number" dir="rtl" placeholder="מספר שורה בטקסט">
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">חפש</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<p class="alignright" style="padding-top: 2ex;">
+    :תוצאות
+</p>
+<table style="margin-top: 3ex;" class="table table-striped">
+    <thead>
+        <tr>
+            <td>Key</td>
+            <td>Value</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of rowStatsKeys">
+            <td>{{row }}</td>
+            <td> {{rowStats[row]}}</td>
+        </tr>
+    </tbody>
+</table>

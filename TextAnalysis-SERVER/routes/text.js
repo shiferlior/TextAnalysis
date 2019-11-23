@@ -12,13 +12,6 @@ router.get('/', asyncHandler(async (req, res, next) => {
   res.send({ recordset: result.recordset });
 }));
 
-router.get('/:id/AllPhrases', asyncHandler(async (req, res, next) => {
-  let result = await db.runProc('[dbo].[GetAllPhrasesInAText_sp]',[
-    ['textid', sql.INT, req.params.id]
-  ]);
-  res.send({ recordset: result.recordset });
-}));
-
 router.get('/findByPhrase/:phrase', asyncHandler(async (req, res, next) => {
   let result = await db.runProc('[dbo].[GetTextByPhrase_sp]', [
     ['phrase', sql.NVarChar(250), req.params.phrase]
@@ -34,11 +27,36 @@ router.get('/findByMetadata/:key/:value', asyncHandler(async (req, res, next) =>
   res.send({ recordset: result.recordset });
 }));
 
+router.get('/showAllPhrasesInAText/:key', asyncHandler(async (req, res, next) => {
+  await showAllPhrasesInAText(req,res);
+}));
+router.get('/showAllPhrasesInAText/', asyncHandler(async (req, res, next) => {
+  await showAllPhrasesInAText(req,res);
+}));
+async function showAllPhrasesInAText(req,res) {
+  let temp = req.params.key;
+  if(!(temp>0)) 
+    temp = -1;
+  let result = await db.runProc('[dbo].[GetAllPhrasesInAText_sp]', [
+    ['textid', sql.Int, temp]
+  ]);
+  res.send({ recordset: result.recordset });
+}
+
+router.get('/:id/AllPhrases', asyncHandler(async (req, res, next) => {
+  let result = await db.runProc('[dbo].[GetAllPhrasesInAText_sp]',[
+    ['textid', sql.INT, req.params.id]
+  ]);
+  res.send({ recordset: result.recordset });
+}));
+
+
 router.post('/:id/addMetadata', asyncHandler(async (req, res, next) => {
-  let result = await sqlRequest('[dbo].[AddTextMetaData_sp]', [
-    ['textid', sql.INT, req.params.id],
-    ['key', sql.NVarChar(50), req.body.key],
-    ['value', sql.NVarChar(250), req.body.value]
+  console.log(req.body.subjectKey);
+  let result = await db.runProc('[dbo].[AddTextMetaData_sp]', [
+    ['textid', sql.Int, req.params.id],
+    ['key', sql.NVarChar(50), req.body.subjectKey],
+    ['value', sql.NVarChar(250), req.body.subjectValue]
   ]);
   if (result.err)
     res.status(409).send({ err: result.err.originalError.info.message });

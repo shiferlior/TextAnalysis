@@ -12,10 +12,11 @@ import { PhrasesGroupComponent } from './phrases-group/phrases-group.component';
 import { LinguisticExpressionComponent } from './linguistic-expression/linguistic-expression.component';
 import { ShowPhrasesGroupComponent } from './show-phrases-group/show-phrases-group.component';
 import { StatisticalDataComponent } from './statistical-data/statistical-data.component';
+import { LoadTextComponent } from './load-text/load-text.component';
 
 const routes: Routes = [
   { path: 'getTexts', component: TextsComponent },
-  { path: 'loadText', component: HomeComponent },
+  { path: 'loadText', component: LoadTextComponent },
   { path: 'loadTextMetadata', component: LoadMetadataTextComponent },
   { path: 'showTextPhrases', component: ShowTextPhrasesComponent },
   { path: 'ShowTextPhrasesAsIndex', component: ShowTextPhrasesAsIndexComponent },

@@ -21,9 +21,9 @@ export class HomeComponent implements OnInit {
   }
 
   createDoc(loadDocForm: NgForm): void {
-    this.textSerice.createText(loadDocForm.value)
-      .subscribe(res => {
-        alert(res.title);
-      });
+    // this.textSerice.createText(loadDocForm.value)
+    //   .subscribe(res => {
+    //     alert(res.title);
+    //   });
   }
 }

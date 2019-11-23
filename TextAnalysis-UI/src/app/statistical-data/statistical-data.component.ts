@@ -42,5 +42,4 @@ export class StatisticalDataComponent implements OnInit {
       this.rowStatsKeys = Object.keys(this.rowStats);
     });
   }
-
 }

@@ -28,14 +28,14 @@ router.get('/findByMetadata/:key/:value', asyncHandler(async (req, res, next) =>
 }));
 
 router.get('/showAllPhrasesInAText/:key', asyncHandler(async (req, res, next) => {
-  await showAllPhrasesInAText(req,res);
+  await showAllPhrasesInAText(req, res);
 }));
 router.get('/showAllPhrasesInAText/', asyncHandler(async (req, res, next) => {
-  await showAllPhrasesInAText(req,res);
+  await showAllPhrasesInAText(req, res);
 }));
-async function showAllPhrasesInAText(req,res) {
+async function showAllPhrasesInAText(req, res) {
   let temp = req.params.key;
-  if(!(temp>0)) 
+  if (!(temp > 0))
     temp = -1;
   let result = await db.runProc('[dbo].[GetAllPhrasesInAText_sp]', [
     ['textid', sql.Int, temp]
@@ -44,7 +44,7 @@ async function showAllPhrasesInAText(req,res) {
 }
 
 router.get('/:id/AllPhrases', asyncHandler(async (req, res, next) => {
-  let result = await db.runProc('[dbo].[GetAllPhrasesInAText_sp]',[
+  let result = await db.runProc('[dbo].[GetAllPhrasesInAText_sp]', [
     ['textid', sql.INT, req.params.id]
   ]);
   res.send({ recordset: result.recordset });
@@ -52,7 +52,6 @@ router.get('/:id/AllPhrases', asyncHandler(async (req, res, next) => {
 
 
 router.post('/:id/addMetadata', asyncHandler(async (req, res, next) => {
-  console.log(req.body.subjectKey);
   let result = await db.runProc('[dbo].[AddTextMetaData_sp]', [
     ['textid', sql.Int, req.params.id],
     ['key', sql.NVarChar(50), req.body.subjectKey],
@@ -65,20 +64,62 @@ router.post('/:id/addMetadata', asyncHandler(async (req, res, next) => {
 }));
 
 
-router.post('/', function (req, res, next) {
+router.post('/stepOne/CreateTextEntity/', asyncHandler(async (req, res, next) => {
   let title = req.body.title;
-  let path = req.body.path;
-  console.log(req.body);
-  if (path.includes('http://')) {
-    getTextByHttp(title, path);
-    console.log(12);
-  }
-  else {
-    //TODO: getTextByFile
-  }
+  //let path = req.body.path;
+  //console.log(req.body);
 
-  res.status(200).json({ title: 'start' });
-});
+  //let pool = await sql.connect(dbConfig);
+  let result = await db.runProc('[dbo].[IngestNewTextMultyLevelProcess_StepOne_CreateTextEntity_sp]', [
+    ['title', sql.NVarChar(250), title]
+  ]);
+  // .input('title', sql.NVarChar(250), title)
+  // .execute('[dbo].[IngestNewTextMultyLevelProcess_StepOne_CreateTextEntity_sp]');
+  //let id = result.recordset[0].id;
+
+  res.send({ recordset: result.recordset });
+
+  // if (path.includes('http://')) {
+  //   getTextByHttp(title, path);
+  //   console.log(12);
+  // }
+  // else {
+  //   //TODO: getTextByFile
+  // }
+
+  // res.status(200).json({ title: 'start' });
+}));
+
+
+router.post('/stepTwo/addNewRow/', asyncHandler(async (req, res, next) => {
+
+  let result = await db.runProc('[dbo].[IngestNewTextMultyLevelProcess_StepTwo_AddNewRow_sp]', [
+    ['row', sql.NVarChar(sql.MAX), req.body.row],
+    ['textid', sql.Int, req.body.textId]
+  ]);
+
+  // let pool = await sql.connect(dbConfig);
+  // let result = await pool.request()
+  //   .input('row', sql.NVarChar(sql.MAX), req.body.row)
+  //   .input('textid', sql.INT, req.body.textId)
+  //   .execute('[dbo].[IngestNewTextMultyLevelProcess_StepTwo_AddNewRow_sp]');
+
+  res.send({ recordset: result.recordset });
+}));
+
+router.post('/stepThree/applyUDP/', asyncHandler(async (req, res, next) => {
+
+  let result = await db.runProc('[dbo].[IngestNewTextMultyLevelProcess_StepThree_ApplyUDP_sp]', [
+    ['textid', sql.Int, req.body.textId]
+  ]);
+
+  // let pool = await sql.connect(dbConfig);
+  // let result = await pool.request()
+  //   .input('textid', sql.INT, req.body.textId)
+  //   .execute('[dbo].[IngestNewTextMultyLevelProcess_StepThree_ApplyUDP_sp]');
+
+  res.send({ recordset: result.recordset });
+}));
 
 async function getTextByHttp(title, path) {
   let text = "";
@@ -93,48 +134,44 @@ async function getTextByHttp(title, path) {
     res.on("end", () => {
       //body = JSON.parse(body);
       console.log('im hereeeee');
-      putDb(title, text)
-        .then(() => console.log("success"), () => console.error("reject"));
+
     });
   });
-
 }
 
-async function putDb(title, text) {
-  try {
-    let pool = await sql.connect(dbConfig);
-    let result2 = await pool.request()
-      .input('title', sql.NVarChar(250), title)
-      .execute('[dbo].[IngestNewTextMultyLevelProcess_StepOne_CreateTextEntity_sp]');
-    let id = result2.recordset[0].id;
-    console.log("ID: " + id);
+// putDb(title, text)
+//         .then(() => console.log("success"), () => console.error("reject"));
 
-    let tempSubText = "";
+// async function putDb(title, text) {
 
-    for (let i = 0; i < text.length; i++) {
-      tempSubText += text[i];
+//   console.log("ID: " + id);
 
-      if (text[i] === String.fromCharCode(10) || text[i] === String.fromCharCode(13)) {
-        await pool.request()
-          .input('row', sql.NVarChar(sql.MAX), tempSubText)
-          .input('textid', sql.INT, id)
-          .execute('[dbo].[IngestNewTextMultyLevelProcess_StepTwo_AddNewRow_sp]');
-        console.log("{" + i + "}: " + tempSubText);
-        console.log("p:" + ((i / text.length) * 100).toFixed(2));
-        tempSubText = "";
-      }
-    }
+//   let tempSubText = "";
 
-    await pool.request()
-      .input('textid', sql.INT, id)
-      .execute('[dbo].[IngestNewTextMultyLevelProcess_StepThree_ApplyUDP_sp]');
+//   for (let i = 0; i < text.length; i++) {
+//     tempSubText += text[i];
 
-    console.dir(result2);
-    pool.close();
-  } catch (err) {
-    console.error(err);
-    pool.close();
-  }
-}
+//     if (text[i] === String.fromCharCode(10) || text[i] === String.fromCharCode(13)) {
+//       await pool.request()
+//         .input('row', sql.NVarChar(sql.MAX), tempSubText)
+//         .input('textid', sql.INT, id)
+//         .execute('[dbo].[IngestNewTextMultyLevelProcess_StepTwo_AddNewRow_sp]');
+//       console.log("{" + i + "}: " + tempSubText);
+//       console.log("p:" + ((i / text.length) * 100).toFixed(2));
+//       tempSubText = "";
+//     }
+//   }
+
+//   await pool.request()
+//     .input('textid', sql.INT, id)
+//     .execute('[dbo].[IngestNewTextMultyLevelProcess_StepThree_ApplyUDP_sp]');
+
+//   console.dir(result2);
+//   pool.close();
+// } catch (err) {
+//   console.error(err);
+//   pool.close();
+// }
+// }
 
 module.exports = router;

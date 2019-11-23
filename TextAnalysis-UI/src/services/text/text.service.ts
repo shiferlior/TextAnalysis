@@ -21,75 +21,88 @@ export class TextService {
 
   constructor(private http: HttpClient) { }
 
-  // POST
-  createText(data): Observable<Text> {
-    return this.http.post<Text>(this.baseurl + '/text/', JSON.stringify(data), this.httpOptions)
-      .pipe(
-        catchError(this.errorHandl)
-      );
+  // POST Create text step 1
+  createTextStep1(title: { title: string, path: string }): Observable<{ "recordset": [any] }> {
+    return this.http.post<{ "recordset": [any] }>(`${this.baseurl}/text/stepOne/CreateTextEntity/`,
+      JSON.stringify(title),
+      this.httpOptions)
+      .pipe(catchError(this.errorHandler));
   }
+
+  // POST Create text step 2
+  createTextStep2(loadText: { textId: number, row: string }): Observable<{ "recordset": [any] }> {
+    return this.http.post<{ "recordset": [any] }>(`${this.baseurl}/text/stepTwo/addNewRow/`,
+      JSON.stringify(loadText),
+      this.httpOptions)
+      .pipe(catchError(this.errorHandler));
+  }
+
+
+  // POST Create text step 3
+  createTextStep3(loadText: { textId: number }): Observable<{ "recordset": [any] }> {
+    return this.http.post<{ "recordset": [any] }>(`${this.baseurl}/text/stepThree/applyUDP/`,
+      JSON.stringify(loadText),
+      this.httpOptions)
+      .pipe(catchError(this.errorHandler));
+  }
+
   // POST metadata
   insertMetadata(metadata: Metadata): Observable<any> {
     return this.http.post<Text>(this.baseurl + '/text/' + metadata.textId + '/addMetadata/', JSON.stringify(metadata), this.httpOptions)
-      .pipe(catchError(this.errorHandl));
+      .pipe(catchError(this.errorHandler));
+  }
+
+  // GET
+  getTextByURL(url: string): Observable<any> {
+    return this.http.get<any>(url)
+      .pipe(catchError(this.errorHandler));
   }
 
   // GET
   getTexts(): Observable<{ "recordset": [Text] }> {
     return this.http.get<{ "recordset": [Text] }>(this.baseurl + '/text/')
-      .pipe(
-        catchError(this.errorHandl)
-      );
+      .pipe(catchError(this.errorHandler));
   }
 
 
   // GET
   getTextsByPhrase(phrase): Observable<{ "recordset": [Text] }> {
     return this.http.get<{ "recordset": [Text] }>(this.baseurl + '/text/findByPhrase/' + phrase)
-      .pipe(
-        retry(1),
-        catchError(this.errorHandl)
-      )
+      .pipe(catchError(this.errorHandler));
   }
 
   // GET
   getTextsByMetadata(subjectKey: string, subjectValue: string): Observable<{ "recordset": [Text] }> {
     return this.http.get<{ "recordset": [Text] }>(this.baseurl + '/text/findByMetadata/' + subjectKey + '/' + subjectValue)
-      .pipe(
-        retry(1),
-        catchError(this.errorHandl)
-      )
+      .pipe(catchError(this.errorHandler));
   }
 
   //GET
   getAllPhrasesInAText(textid: number): Observable<{ "recordset": [Text] }> {
     return this.http.get<{ "recordset": [Text] }>(this.baseurl + '/text/showAllPhrasesInAText/' + textid + '/')
-      .pipe(
-        retry(1),
-        catchError(this.errorHandl)
-      );
+      .pipe(catchError(this.errorHandler));
   }
 
-  // PUT
-  updateText(id, data): Observable<Text> {
-    return this.http.put<Text>(this.baseurl + '/Texttracking/' + id, JSON.stringify(data), this.httpOptions)
-      .pipe(
-        retry(1),
-        catchError(this.errorHandl)
-      )
-  }
+  // // PUT
+  // updateText(id, data): Observable<Text> {
+  //   return this.http.put<Text>(this.baseurl + '/Texttracking/' + id, JSON.stringify(data), this.httpOptions)
+  //     .pipe(
+  //       catchError(this.errorHandl)
+  //     )
+  // }
 
-  // DELETE
-  deleteText(id) {
-    return this.http.delete<Text>(this.baseurl + '/Texttracking/' + id, this.httpOptions)
-      .pipe(
-        retry(1),
-        catchError(this.errorHandl)
-      )
-  }
+  // // DELETE
+  // deleteText(id) {
+  //   return this.http.delete<Text>(this.baseurl + '/Texttracking/' + id, this.httpOptions)
+  //     .pipe(
+  //       retry(1),
+  //       catchError(this.errorHandl)
+  //     )
+  // }
+
 
   // Error handling
-  errorHandl(error) {
+  errorHandler(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       // Get client-side error

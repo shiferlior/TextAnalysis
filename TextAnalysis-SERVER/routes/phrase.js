@@ -24,4 +24,6 @@ router.get('/GetIndexForPhrase/:phrase/:textId', asyncHandler(async (req, res, n
     res.send({ recordset: result.recordset });
 }));
 
+
+
 module.exports = router;

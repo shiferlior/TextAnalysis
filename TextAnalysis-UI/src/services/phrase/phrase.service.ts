@@ -20,14 +20,17 @@ export class PhraseService {
     })
   };
 
-
+  // GET
+  getPhrasesDefinedByUser(): Observable<{ "recordset": [Phrase] }> {
+    return this.http.get<{ "recordset": [Phrase] }>
+      (`${this.baseurl}/definedPhrase/GetPhrasesDefinedByUser/`)
+      .pipe(catchError(this.errorHandler));
+  }
 
   // GET
   getIndexForPhrase(phrase: { phrase: string, textId: number }): Observable<{ "recordset": [Phrase] }> {
     return this.http.get<{ "recordset": [Phrase] }>(this.baseurl + '/phrase/GetIndexForPhrase/' + phrase.phrase + '/' + phrase.textId)
-      .pipe(
-        catchError(this.errorHandler)
-      )
+      .pipe(catchError(this.errorHandler));
   }
 
   // GET
@@ -36,11 +39,26 @@ export class PhraseService {
     rowNum: number,
     wordInRow: number
   }): Observable<{ "recordset": [Phrase] }> {
-    return this.http.get<{ "recordset": [Phrase] }>(
-      `${this.baseurl}/phrase/GetPhraseByRowLocation/${phrase.textId}/${phrase.rowNum}/${phrase.wordInRow}`)
-      .pipe(
-        catchError(this.errorHandler)
-      )
+    return this.http.get<{ "recordset": [Phrase] }>
+      (`${this.baseurl}/phrase/GetPhraseByRowLocation/${phrase.textId}/${phrase.rowNum}/${phrase.wordInRow}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  // GET
+  searchPhrase(phrase: {
+    textId: number,
+    phrase: string
+  }): Observable<{ "recordset": [Phrase] }> {
+    return this.http.get<{ "recordset": [Phrase] }>
+      (`${this.baseurl}/phrase/GetPhraseByRowLocation/${phrase.phrase}/${phrase.textId}/`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  // POST DefinedGroup
+  addUserDefinedPhrase(newPhrase: { newPhrase: string }): Observable<any> {
+    return this.http.post<any>
+      (`${this.baseurl}/definedPhrase/newPhrase/`, JSON.stringify(newPhrase), this.httpOptions)
+      .pipe(catchError(this.errorHandler));
   }
 
   // Error handling

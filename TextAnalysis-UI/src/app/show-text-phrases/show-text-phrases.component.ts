@@ -17,12 +17,13 @@ export class ShowTextPhrasesComponent implements OnInit {
 
   ngOnInit() {
     this.textPhrasesForm = this.formBuilder.group({
-      textId: 0
+      textId: null
     });
   }
 
   findByText(textPhrasesForm:{textId: number}) {
     let textIdTemp = textPhrasesForm.textId;
+    alert(textIdTemp);
     if(!(textIdTemp && textIdTemp>0))
       textIdTemp = -1;
     this.textService.getAllPhrasesInAText(textIdTemp).subscribe((res)=>{

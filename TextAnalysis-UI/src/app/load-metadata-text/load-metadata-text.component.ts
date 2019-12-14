@@ -19,7 +19,7 @@ export class LoadMetadataTextComponent implements OnInit {
 
   ngOnInit() {
     this.loadTextMetadataForm = this.formBuilder.group({
-      textId: 0,
+      textId: null,
       subjectKey: '',
       subjectValue: ''
     });

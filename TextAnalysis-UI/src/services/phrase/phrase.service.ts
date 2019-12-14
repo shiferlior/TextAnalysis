@@ -50,7 +50,7 @@ export class PhraseService {
     phrase: string
   }): Observable<{ "recordset": [Phrase] }> {
     return this.http.get<{ "recordset": [Phrase] }>
-      (`${this.baseurl}/phrase/GetPhraseByRowLocation/${phrase.phrase}/${phrase.textId}/`)
+      (`${this.baseurl}/definedPhrase/SearchPhrase/${phrase.phrase}/${phrase.textId}/`)
       .pipe(catchError(this.errorHandler));
   }
 

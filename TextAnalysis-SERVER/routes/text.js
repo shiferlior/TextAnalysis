@@ -27,21 +27,20 @@ router.get('/findByMetadata/:key/:value', asyncHandler(async (req, res, next) =>
   res.send({ recordset: result.recordset });
 }));
 
-router.get('/showAllPhrasesInAText/:key', asyncHandler(async (req, res, next) => {
-  await showAllPhrasesInAText(req, res);
-}));
-router.get('/showAllPhrasesInAText/', asyncHandler(async (req, res, next) => {
-  await showAllPhrasesInAText(req, res);
-}));
-async function showAllPhrasesInAText(req, res) {
-  let temp = req.params.key;
-  if (!(temp > 0))
-    temp = -1;
-  let result = await db.runProc('[dbo].[GetAllPhrasesInAText_sp]', [
-    ['textid', sql.Int, temp]
-  ]);
+router.get('/showAllPhrasesInAText/:from/:to/:textId', asyncHandler(async (req, res, next) => {
+  let params = [
+    ['from', sql.Int, req.params.from],
+    ['to', sql.Int, req.params.to]
+  ];
+  if (req.params.textId && req.params.textId !== "null") {
+    params.push(['textId', sql.Int, req.params.textId]);
+  }
+  else {
+    params.push(['textId', sql.Int, -1]);
+  }
+  let result = await db.runProc('[dbo].[GetAllPhrasesInAText_sp]', params);
   res.send({ recordset: result.recordset });
-}
+}));
 
 router.get('/:id/AllPhrases', asyncHandler(async (req, res, next) => {
   let result = await db.runProc('[dbo].[GetAllPhrasesInAText_sp]', [

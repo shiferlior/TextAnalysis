@@ -30,6 +30,7 @@
     <tbody>
         <tr *ngFor="let phrase of phrases">
             <td>{{ phrase.phrase }}</td>
+            <td><a [routerLink]="['/SearchLinguisticExpression', phrase.phrase]" class="btn btn-primary">Search</a></td>
         </tr>
     </tbody>
 </table>

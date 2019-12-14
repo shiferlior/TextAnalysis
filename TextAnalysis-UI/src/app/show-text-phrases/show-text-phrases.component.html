@@ -5,7 +5,7 @@
             <div class="col-10">
                 <div class="card">
                     <div class="card-body">
-                        <p class="alignright"><label for="textId">:לפי מזהה טקסט</label></p>
+                        <p class="alignright"><label for="textId">:הצגת כל המילים בטקסט</label></p>
                         <input id="textId" formControlName="textId" class="form-control" type="number" placeholder="מזהה טקסט" dir="rtl">
                     </div>
                     <div class="card-footer">
@@ -20,18 +20,19 @@
 <table style="margin-top: 3ex;" class="table table-striped">
     <thead>
         <tr>
-            <th scope="col">Text id</th>
+            <th scope="col">Phrase id</th>
             <th scope="col">phrase</th>
+            <th scope="col">Text id</th>
             <th scope="col">button1</th>
-            <th scope="col">button2</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let phrase of phrases">
             <td>{{ phrase.id }}</td>
             <td>{{ phrase.phrase }}</td>
+            <td>{{ phrase.textId }}</td>
             <td><a [routerLink]="['/edit', phrase.id]" class="btn btn-primary">Edit</a></td>
-            <td><a (click)="deletetext(phrase.id)" class="btn btn-danger">Delete</a>
         </tr>
     </tbody>
+    <button *ngIf="isPhrasesWithWords()" (click)='next1000Words()' class="btn btn-primary">אלף המילים הבאות</button>
 </table>

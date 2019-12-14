@@ -13,6 +13,7 @@ import { LinguisticExpressionComponent } from './linguistic-expression/linguisti
 import { ShowPhrasesGroupComponent } from './show-phrases-group/show-phrases-group.component';
 import { StatisticalDataComponent } from './statistical-data/statistical-data.component';
 import { LoadTextComponent } from './load-text/load-text.component';
+import {SearchLinguisticExpressionComponent} from './search-linguistic-expression/search-linguistic-expression.component';
 
 const routes: Routes = [
   { path: 'getTexts', component: TextsComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'PhrasesGroup', component: PhrasesGroupComponent },
   { path: 'ShowPhrasesGroup', component: ShowPhrasesGroupComponent },
   { path: 'StatisticalData', component: StatisticalDataComponent },
+  { path: 'SearchLinguisticExpression/:phrase', component: SearchLinguisticExpressionComponent },
   { path: '', redirectTo: '/getTexts', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];

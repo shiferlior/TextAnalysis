@@ -4,6 +4,7 @@ import { Text } from './text';
 import { Observable, throwError, from } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { Metadata } from './metadata';
+import { Phrase } from '../phrase/phrase';
 
 @Injectable({
   providedIn: 'root'
@@ -78,8 +79,9 @@ export class TextService {
   }
 
   //GET
-  getAllPhrasesInAText(textid: number): Observable<{ "recordset": [Text] }> {
-    return this.http.get<{ "recordset": [Text] }>(this.baseurl + '/text/showAllPhrasesInAText/' + textid + '/')
+  getAllPhrasesInAText(textid: number,from: number, to: number): Observable<{ "recordset": [Phrase] }> {
+    return this.http.get<{ "recordset": [Phrase] }>
+      (`${this.baseurl}/text/showAllPhrasesInAText/${from}/${to}/${textid}`)
       .pipe(catchError(this.errorHandler));
   }
 

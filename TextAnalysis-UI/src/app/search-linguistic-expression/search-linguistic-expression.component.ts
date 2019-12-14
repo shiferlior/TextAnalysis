@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Phrase } from 'src/services/phrase/phrase';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { PhraseService } from 'src/services/phrase/phrase.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search-linguistic-expression',
@@ -7,9 +11,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchLinguisticExpressionComponent implements OnInit {
 
-  constructor() { }
+  lingusticExpressionForm: FormGroup;
+  phrases: [Phrase];
+  constructor(
+    private phraseService: PhraseService,
+    private formBuilder: FormBuilder,
+    private activatedroute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.activatedroute.paramMap.subscribe(params => {
+      this.lingusticExpressionForm = this.formBuilder.group({
+        phrase: params.get('phrase'),
+        textId: null
+      });
+      this.phraseService.searchPhrase({phrase: params.get('phrase'), textId:null}).subscribe(res => {
+        this.phrases = res.recordset;
+      });
+    });
+  }
+
+  searchPhrase(lingusticExpression) {
+    this.phraseService.searchPhrase(lingusticExpression).subscribe(res => {
+        this.phrases = res.recordset;
+      });
   }
 
 }

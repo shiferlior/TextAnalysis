@@ -1,1 +1,48 @@
-<p>search-linguistic-expression works!</p>
+<form [formGroup]=lingusticExpressionForm (ngSubmit)="searchPhrase(lingusticExpressionForm.value)">
+    <div class="container" style="margin-top: 3ex;">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="alignright"><label for="newPhrase">:חיפוש ביטויים לשוניים</label></p>
+                        <input id="phrase" formControlName="phrase" style="margin-top: 2ex;" class="form-control"
+                            type="text" dir="rtl" placeholder="ביטוי לשוני">
+                        <input id="textId" formControlName="textId" style="margin-top: 2ex;" class="form-control"
+                            type="number" dir="rtl" placeholder="אופציונלי - מזהה טקסט">
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">חפש</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+<table style="margin-top: 3ex;" class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Phrase id</th>
+            <th scope="col">Phrase content</th>
+            <th scope="col">Text id of phrase</th>
+            <th scope="col">Row number in text</th>
+            <th scope="col">Word number in row</th>
+            <th scope="col">Chracter number in text</th>
+            <th scope="col">Word number in text</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let phrase of phrases">
+            <td>{{ phrase.id }}</td>
+            <td>{{ phrase.phrase }}</td>
+            <td>{{ phrase.textId }}</td>
+            <td>{{ phrase.rowInText }}</td>
+            <td>{{ phrase.locationInRow }}</td>
+            <td>{{ phrase.locationFromStart }}</td>
+            <td>{{ phrase.wordNumberInText }}</td>
+        </tr>
+    </tbody>
+</table>

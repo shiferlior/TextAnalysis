@@ -22,6 +22,7 @@ import { ShowPhrasesGroupComponent } from './show-phrases-group/show-phrases-gro
 import { StatisticalDataComponent } from './statistical-data/statistical-data.component';
 import { LoadTextComponent } from './load-text/load-text.component';
 import { SearchLinguisticExpressionComponent } from './search-linguistic-expression/search-linguistic-expression.component';
+import { AddPhraseToPhrasesGroupComponent } from './add-phrase-to-phrases-group/add-phrase-to-phrases-group.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { SearchLinguisticExpressionComponent } from './search-linguistic-express
     ShowPhrasesGroupComponent,
     StatisticalDataComponent,
     LoadTextComponent,
-    SearchLinguisticExpressionComponent
+    SearchLinguisticExpressionComponent,
+    AddPhraseToPhrasesGroupComponent
   ],
   imports: [
     FormsModule,

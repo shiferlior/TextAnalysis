@@ -33,8 +33,9 @@
             <th scope="col">Text id</th>
             <th scope="col">Title</th>
             <th scope="col">Total words</th>
-            <th scope="col">button1</th>
-            <th scope="col">button2</th>
+            <th scope="col">Add metadata</th>
+            <th scope="col">Find phrase by location</th>
+            <th scope="col">Show text phrases</th>
         </tr>
     </thead>
     <tbody>
@@ -42,8 +43,9 @@
             <td>{{ text.id }}</td>
             <td>{{ text.title }}</td>
             <td>{{ text.totalWords }}</td>
-            <td><a [routerLink]="['/edit', text.id]" class="btn btn-primary">Edit</a></td>
-            <td><a (click)="deletetext(text.id)" class="btn btn-danger">Delete</a>
+            <td><a [routerLink]="['/loadTextMetadata', text.id]" class="btn btn-danger">Add</a></td>
+            <td><a [routerLink]="['/FindPhraseByLocation', text.id]" class="btn btn-danger">find</a></td>
+            <td><a [routerLink]="['/showTextPhrases', text.id]" class="btn btn-primary">Show</a></td>
         </tr>
     </tbody>
 </table>

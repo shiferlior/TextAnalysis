@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, NumberValueAccessor } from '@angular/forms';
 import { TextService } from '../../services/text/text.service';
 import { JsonPipe } from '@angular/common';
 import { Phrase } from 'src/services/phrase/phrase';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-show-text-phrases',
@@ -17,15 +18,17 @@ export class ShowTextPhrasesComponent implements OnInit {
   from: number;
   to: number;
 
-  constructor(private textService: TextService, private formBuilder: FormBuilder) { }
+  constructor(private textService: TextService, private formBuilder: FormBuilder, private activatedroute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.textPhrasesForm = this.formBuilder.group({
-      textId: null
-    });
     this.from = 0;
     this.to = 1000;
-
+    this.activatedroute.paramMap.subscribe(params => {
+      this.textPhrasesForm = this.formBuilder.group({
+        textId: params.get('textId')
+      });
+      this.findByText({'textId': parseInt(params.get('textId'),10)});
+    });
   }
 
   findByText(textPhrasesForm: { textId: number }) {

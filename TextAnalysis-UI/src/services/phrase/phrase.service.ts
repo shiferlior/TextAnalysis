@@ -20,6 +20,13 @@ export class PhraseService {
     })
   };
 
+   // GET
+   getContextForPhrase(details: {phraseId: number,wordsBackward:number,wordsForward:number}): Observable<{ "recordset": [{text:string}] }> {
+    return this.http.get<{ "recordset": [{text:string}] }>
+      (`${this.baseurl}/phrase/GetContextForPhrase/${details.phraseId}/${details.wordsBackward}/${details.wordsForward}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
   // GET
   getPhrasesDefinedByUser(): Observable<{ "recordset": [Phrase] }> {
     return this.http.get<{ "recordset": [Phrase] }>

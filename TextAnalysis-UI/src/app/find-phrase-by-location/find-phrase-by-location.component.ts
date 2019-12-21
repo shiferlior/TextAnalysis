@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { TextService } from '../../services/text/text.service';
 import { PhraseService } from 'src/services/phrase/phrase.service';
 import { Phrase } from 'src/services/phrase/phrase';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-find-phrase-by-location',
@@ -14,13 +15,17 @@ export class FindPhraseByLocationComponent implements OnInit {
   phrases: [Phrase];
   constructor(
     private phraseSerice: PhraseService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private activatedroute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
-    this.locationPhraseForm = this.formBuilder.group({
-      textId: null,
-      rowNum: null,
-      wordInRow: null
+    this.activatedroute.paramMap.subscribe(params => {
+      this.locationPhraseForm = this.formBuilder.group({
+        textId: params.get('textId'),
+        rowNum: null,
+        wordInRow: null
+      });
     });
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TextService } from '../../services/text/text.service';
 import { Metadata } from 'src/services/text/metadata';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-load-metadata-text',
@@ -14,15 +15,20 @@ export class LoadMetadataTextComponent implements OnInit {
 
   constructor(
     private textService: TextService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private activatedroute: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.loadTextMetadataForm = this.formBuilder.group({
-      textId: null,
-      subjectKey: '',
-      subjectValue: ''
+    this.activatedroute.paramMap.subscribe(params => {
+      this.loadTextMetadataForm = this.formBuilder.group({
+        textId: params.get('textId'),
+        subjectKey: '',
+        subjectValue: ''
+      });
     });
+
+    
   }
 
   insertMetadata(loadTextMetadataForm:Metadata) {

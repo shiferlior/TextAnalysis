@@ -24,6 +24,17 @@ router.get('/GetIndexForPhrase/:phrase/:textId', asyncHandler(async (req, res, n
     res.send({ recordset: result.recordset });
 }));
 
+router.get('/GetContextForPhrase/:phraseId/:wordsBackward/:wordsForward', asyncHandler(async (req, res, next) => {
+    let params = [
+        ['phraseId',sql.Int,req.params.phraseId],
+        ['wordsbackward',sql.Int,req.params.wordsBackward],
+        ['wordsforward',sql.Int,req.params.wordsForward]
+    ];
+    let result = await db.runProc('[dbo].[GetContextForPhrase_sp]',params);
+    res.send({ recordset: result.recordset });
+}));
+
+
 
 
 module.exports = router;

@@ -43,6 +43,11 @@ export class DefinedWordsGroupService {
     return this.http.post<any>(`${this.baseurl}/definedWordsGroup/`, JSON.stringify(groupName), this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
+   // POST AddDefinedGroup
+   addPhraseToUserDefinedGroup(details: {groupId:number,phrase: string}): Observable<any> {
+    return this.http.post<any>(`${this.baseurl}/definedWordsGroup/AddPhraseToUserDefinedGroup/`, JSON.stringify(details), this.httpOptions)
+      .pipe(catchError(this.errorHandler));
+  }
 
 
   // Error handling

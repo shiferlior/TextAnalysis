@@ -22,6 +22,7 @@ export class TextsComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this.getTextForm = this.formBuilder.group({
       phrase: '',
       subjectKey: '',

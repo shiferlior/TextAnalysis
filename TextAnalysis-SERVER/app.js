@@ -12,6 +12,7 @@ var phraseRouter = require('./routes/phrase');
 var definedPhraseRouter = require('./routes/definedPhrase');
 var definedWordsGroupRouter = require('./routes/definedWordsGroup');
 var statsRouter = require('./routes/stats');
+var xmlRouter = require('./routes/xml');
 
 
 var app = express();
@@ -32,6 +33,7 @@ app.use('/phrase', phraseRouter);
 app.use('/definedPhrase', definedPhraseRouter);
 app.use('/definedWordsGroup', definedWordsGroupRouter);
 app.use('/stats', statsRouter);
+app.use('/xml', xmlRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

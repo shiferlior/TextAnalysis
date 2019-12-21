@@ -1,0 +1,24 @@
+<p>xml-export works!</p>
+<input type="file">
+<input type="file" webkitdirectory directory multiple>
+
+<form [formGroup]=xmlForm (ngSubmit)="findByText(xmlForm.value)">
+    <div style="margin-top: 3ex;" class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="alignright"><label for="textId">:הצגת כל המילים בטקסט</label></p>                        
+                        <input type="checkbox" value="false" formControlName="ingestedTexts" class="form-control"> אאא
+                        <input type="checkbox" checked=true formControlName="userDefinedGroups" class="form-control"> בבב
+                        <input type="checkbox" formControlName="userDefinedPhrases" class="form-control"> גגג
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">חפש</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

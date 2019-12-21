@@ -23,7 +23,9 @@
             <th scope="col">Phrase id</th>
             <th scope="col">phrase</th>
             <th scope="col">Text id</th>
-            <th scope="col">button1</th>
+            <th scope="col">Add to defined group</th>
+            <th scope="col">Show context</th>
+            <th scope="col">Show phrase index</th>
         </tr>
     </thead>
     <tbody>
@@ -31,7 +33,9 @@
             <td>{{ phrase.id }}</td>
             <td>{{ phrase.phrase }}</td>
             <td>{{ phrase.textId }}</td>
-            <td><a [routerLink]="['/edit', phrase.id]" class="btn btn-primary">Edit</a></td>
+            <td><a [routerLink]="['/AddPhraseToPhrasesGroup/phrase', phrase.phrase]" class="btn btn-danger">Add</a></td>
+            <td><a [routerLink]="['/ShowContextPhraseComponent/', phrase.id]" class="btn btn-primary"> Show Context</a></td>
+            <td><a [routerLink]="['/ShowTextPhrasesAsIndex/', phrase.phrase]" class="btn btn-primary">Show index</a></td>
         </tr>
     </tbody>
     <button *ngIf="isPhrasesWithWords()" (click)='next1000Words()' class="btn btn-primary">אלף המילים הבאות</button>

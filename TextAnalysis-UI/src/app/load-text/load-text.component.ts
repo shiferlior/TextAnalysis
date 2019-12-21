@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class LoadTextComponent implements OnInit {
 
   loadTextForm: FormGroup;
+  precent: number;
 
   constructor(private textService: TextService,
     private formBuilder: FormBuilder) { }
@@ -29,23 +30,24 @@ export class LoadTextComponent implements OnInit {
     this.textService.createTextStep1(loadTextForm).subscribe(res => {
       alert("aaa " + JSON.stringify(loadTextForm));
       textId = res.recordset[0].id;
-      if (textContent != "") {
-        this.continueLoad(textId, textContent);
-      }
-    });
+      // if (textContent != "") {
+      //   this.continueLoad(textId, textContent);
+      // }
+      alert("bbb " + textId);
+      this.textService.getTextByURL(loadTextForm.path).subscribe(res => {
+        alert("eee");
+        textContent = res.text;
+        console.log('fff ' + textContent);
 
-    this.textService.getTextByURL(loadTextForm.path).subscribe(res => {
-      alert("bbb " + JSON.stringify(textContent));
-      textContent = res;
-      if (textId != -1) {
-        this.continueLoad(textId, textContent);
-      }
+        // if (textId != -1) {
+           this.continueLoad(textId, textContent);
+        // }
+      });
+
     });
-    alert("ccc " + JSON.stringify(loadTextForm));
   }
 
   async continueLoad(textId: number, textContent: string) {
-
     let tempSubText = "";
 
     for (let i = 0; i < textContent.length; i++) {
@@ -60,12 +62,12 @@ export class LoadTextComponent implements OnInit {
         }
 
         tempSubText = "";
-        console.log(i / textContent.length);
+        this.precent = ((i / textContent.length)*100);
       }
     }
 
     this.textService.createTextStep3({ textId }).subscribe(res => {
-      alert("ddd " + JSON.stringify(res));
+      alert('success!');
     });
   }
 }

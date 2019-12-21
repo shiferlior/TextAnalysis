@@ -25,8 +25,8 @@
                 <th scope="col">Phrases group id</th>
                 <th scope="col">Name</th>
                 <th scope="col">Total words</th>
-                <th scope="col">button1</th>
-                <th scope="col">button2</th>
+                <th scope="col">הוסף מילים לקבוצה</th>
+                <th scope="col">הצג מילים בקבוצה כאינדקס</th>
             </tr>
         </thead>
         <tbody>
@@ -34,8 +34,8 @@
                 <td>{{ phrasesGroup.id }}</td>
                 <td>{{ phrasesGroup.name }}</td>
                 <td>{{ phrasesGroup.phraseCount }}</td>
-                <td><a [routerLink]="['/edit', phrasesGroup.id]" class="btn btn-primary">Edit</a></td>
-                <td><a (click)="deletetext(phrasesGroup.id)" class="btn btn-danger">Delete</a>
+                <td><a [routerLink]="['/AddPhraseToPhrasesGroup/phrasesGroupId', phrasesGroup.id]" class="btn btn-primary">הוסף</a></td>
+                <td><a [routerLink]="['/ShowPhrasesGroup', phrasesGroup.id]" class="btn btn-danger">הצג</a></td>
             </tr>
         </tbody>
     </table>

@@ -23,6 +23,8 @@ import { StatisticalDataComponent } from './statistical-data/statistical-data.co
 import { LoadTextComponent } from './load-text/load-text.component';
 import { SearchLinguisticExpressionComponent } from './search-linguistic-expression/search-linguistic-expression.component';
 import { AddPhraseToPhrasesGroupComponent } from './add-phrase-to-phrases-group/add-phrase-to-phrases-group.component';
+import { ShowContextPhraseComponent } from './show-context-phrase/show-context-phrase.component';
+import { XmlExportComponent } from './xml-export/xml-export.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { AddPhraseToPhrasesGroupComponent } from './add-phrase-to-phrases-group/
     StatisticalDataComponent,
     LoadTextComponent,
     SearchLinguisticExpressionComponent,
-    AddPhraseToPhrasesGroupComponent
+    AddPhraseToPhrasesGroupComponent,
+    ShowContextPhraseComponent,
+    XmlExportComponent
   ],
   imports: [
     FormsModule,

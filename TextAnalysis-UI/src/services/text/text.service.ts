@@ -24,9 +24,8 @@ export class TextService {
 
   // POST Create text step 1
   createTextStep1(title: { title: string, path: string }): Observable<{ "recordset": [any] }> {
-    return this.http.post<{ "recordset": [any] }>(`${this.baseurl}/text/stepOne/CreateTextEntity/`,
-      JSON.stringify(title),
-      this.httpOptions)
+    return this.http.post<{ "recordset": [any] }>
+      (`${this.baseurl}/text/stepOne/CreateTextEntity/`, JSON.stringify(title), this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
 
@@ -54,8 +53,9 @@ export class TextService {
   }
 
   // GET
-  getTextByURL(url: string): Observable<any> {
-    return this.http.get<any>(url)
+  getTextByURL(path: string): Observable<{ text: string }> {
+    alert('ccc ');
+    return this.http.post<{ text: string }>(`${this.baseurl}/text/getText/`,JSON.stringify({path:path}),this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
 
@@ -79,7 +79,7 @@ export class TextService {
   }
 
   //GET
-  getAllPhrasesInAText(textid: number,from: number, to: number): Observable<{ "recordset": [Phrase] }> {
+  getAllPhrasesInAText(textid: number, from: number, to: number): Observable<{ "recordset": [Phrase] }> {
     return this.http.get<{ "recordset": [Phrase] }>
       (`${this.baseurl}/text/showAllPhrasesInAText/${from}/${to}/${textid}`)
       .pipe(catchError(this.errorHandler));
@@ -112,6 +112,8 @@ export class TextService {
     } else {
       // Get server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${JSON.stringify(error.error.message)}`;
+      alert(JSON.stringify(error));
+      console.error(error);
     }
     alert(errorMessage);
     return throwError(errorMessage);

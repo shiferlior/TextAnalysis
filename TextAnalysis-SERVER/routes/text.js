@@ -64,29 +64,10 @@ router.post('/:id/addMetadata', asyncHandler(async (req, res, next) => {
 
 
 router.post('/stepOne/CreateTextEntity/', asyncHandler(async (req, res, next) => {
-  let title = req.body.title;
-  //let path = req.body.path;
-  //console.log(req.body);
-
-  //let pool = await sql.connect(dbConfig);
   let result = await db.runProc('[dbo].[IngestNewTextMultyLevelProcess_StepOne_CreateTextEntity_sp]', [
-    ['title', sql.NVarChar(250), title]
+    ['title', sql.NVarChar(250), req.body.title]
   ]);
-  // .input('title', sql.NVarChar(250), title)
-  // .execute('[dbo].[IngestNewTextMultyLevelProcess_StepOne_CreateTextEntity_sp]');
-  //let id = result.recordset[0].id;
-
   res.send({ recordset: result.recordset });
-
-  // if (path.includes('http://')) {
-  //   getTextByHttp(title, path);
-  //   console.log(12);
-  // }
-  // else {
-  //   //TODO: getTextByFile
-  // }
-
-  // res.status(200).json({ title: 'start' });
 }));
 
 
@@ -97,46 +78,32 @@ router.post('/stepTwo/addNewRow/', asyncHandler(async (req, res, next) => {
     ['textid', sql.Int, req.body.textId]
   ]);
 
-  // let pool = await sql.connect(dbConfig);
-  // let result = await pool.request()
-  //   .input('row', sql.NVarChar(sql.MAX), req.body.row)
-  //   .input('textid', sql.INT, req.body.textId)
-  //   .execute('[dbo].[IngestNewTextMultyLevelProcess_StepTwo_AddNewRow_sp]');
-
   res.send({ recordset: result.recordset });
 }));
 
 router.post('/stepThree/applyUDP/', asyncHandler(async (req, res, next) => {
-
   let result = await db.runProc('[dbo].[IngestNewTextMultyLevelProcess_StepThree_ApplyUDP_sp]', [
     ['textid', sql.Int, req.body.textId]
   ]);
 
-  // let pool = await sql.connect(dbConfig);
-  // let result = await pool.request()
-  //   .input('textid', sql.INT, req.body.textId)
-  //   .execute('[dbo].[IngestNewTextMultyLevelProcess_StepThree_ApplyUDP_sp]');
-
   res.send({ recordset: result.recordset });
 }));
 
-async function getTextByHttp(title, path) {
+router.post('/getText/', asyncHandler(async (req, res, next) => {
+  let path = req.body.path;
   let text = "";
+  http.get(path, textFromUrl => {
+    textFromUrl.setEncoding("utf8");
 
-  http.get(path, res => {
-    res.setEncoding("utf8");
-
-    res.on("data", data => {
-      //console.log(data);
+    textFromUrl.on("data", data => {
+      console.log(data);
       text += data;
     });
-    res.on("end", () => {
-      //body = JSON.parse(body);
-      console.log('im hereeeee');
-
+    textFromUrl.on("end", () => {
+      res.send({ text: text });
     });
   });
-}
+}));
 
 // putDb(title, text)
 //         .then(() => console.log("success"), () => console.error("reject"));

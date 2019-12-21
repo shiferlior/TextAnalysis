@@ -11,6 +11,14 @@ router.post('/', asyncHandler(async (req, res, next) => {
     res.send({ recordset: result.recordset });
 }));
 
+router.post('/AddPhraseToUserDefinedGroup', asyncHandler(async (req, res, next) => {
+    let result = await db.runProc('[dbo].[AddPhraseToUserDefinedGroup_sp]', [
+        ['Phrase', sql.NVarChar(250), req.body.phrase],
+        ['groupid', sql.Int, req.body.phrasesGroupId]
+    ]);
+    res.send({ recordset: result.recordset });
+}));
+
 router.get('/', asyncHandler(async (req, res, next) => {
     let result = await db.runProc('[dbo].[GetUserDefinedGroupsList_sp]');
     res.send({ recordset: result.recordset });

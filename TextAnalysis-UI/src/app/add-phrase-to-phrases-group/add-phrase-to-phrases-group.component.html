@@ -1,1 +1,21 @@
-<p>add-phrase-to-phrases-group works!</p>
+<form [formGroup]=addPhraseToPhrasesGroupForm (ngSubmit)="addPhraseToPhrasesGroup(addPhraseToPhrasesGroupForm.value)">
+    <div style="margin-top: 3ex;" class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="alignright"><label for="textId">:הוסף מילה לקבוצת מילים</label></p>
+                        <input id="phrasesGroupId" dir="rtl" formControlName="phrasesGroupId" style="margin-top: 2ex;"
+                            class="form-control" type="number" placeholder="הוסף מזהה קבוצת מילים">
+                        <input id="phrase" dir="rtl" formControlName="phrase" style="margin-top: 2ex;" class="form-control"
+                            type="text" placeholder="הוסף מילה">
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">הוסף</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

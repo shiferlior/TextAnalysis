@@ -54,8 +54,7 @@ export class TextService {
 
   // GET
   getTextByURL(path: string): Observable<{ text: string }> {
-    alert('ccc ');
-    return this.http.post<{ text: string }>(`${this.baseurl}/text/getText/`,JSON.stringify({path:path}),this.httpOptions)
+    return this.http.post<{ text: string }>(`${this.baseurl}/text/getText/`, JSON.stringify({ path: path }), this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
 
@@ -84,23 +83,6 @@ export class TextService {
       (`${this.baseurl}/text/showAllPhrasesInAText/${from}/${to}/${textid}`)
       .pipe(catchError(this.errorHandler));
   }
-
-  // // PUT
-  // updateText(id, data): Observable<Text> {
-  //   return this.http.put<Text>(this.baseurl + '/Texttracking/' + id, JSON.stringify(data), this.httpOptions)
-  //     .pipe(
-  //       catchError(this.errorHandl)
-  //     )
-  // }
-
-  // // DELETE
-  // deleteText(id) {
-  //   return this.http.delete<Text>(this.baseurl + '/Texttracking/' + id, this.httpOptions)
-  //     .pipe(
-  //       retry(1),
-  //       catchError(this.errorHandl)
-  //     )
-  // }
 
 
   // Error handling

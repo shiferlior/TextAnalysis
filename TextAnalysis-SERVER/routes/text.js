@@ -3,7 +3,7 @@ const router = express.Router();
 const sql = require('mssql');
 //const dbConfig = require('../TextAnalysis.Config/Database');
 const db = require('../TextAnalysis.DAL/mssqlProvider');
-const http = require("http");
+const https = require("https");
 const url = "https://www.gutenberg.org/files/98/98-0.txt";
 const asyncHandler = require('express-async-handler');
 
@@ -92,7 +92,7 @@ router.post('/stepThree/applyUDP/', asyncHandler(async (req, res, next) => {
 router.post('/getText/', asyncHandler(async (req, res, next) => {
   let path = req.body.path;
   let text = "";
-  http.get(path, textFromUrl => {
+  https.get(path, textFromUrl => {
     textFromUrl.setEncoding("utf8");
 
     textFromUrl.on("data", data => {
@@ -105,39 +105,5 @@ router.post('/getText/', asyncHandler(async (req, res, next) => {
   });
 }));
 
-// putDb(title, text)
-//         .then(() => console.log("success"), () => console.error("reject"));
-
-// async function putDb(title, text) {
-
-//   console.log("ID: " + id);
-
-//   let tempSubText = "";
-
-//   for (let i = 0; i < text.length; i++) {
-//     tempSubText += text[i];
-
-//     if (text[i] === String.fromCharCode(10) || text[i] === String.fromCharCode(13)) {
-//       await pool.request()
-//         .input('row', sql.NVarChar(sql.MAX), tempSubText)
-//         .input('textid', sql.INT, id)
-//         .execute('[dbo].[IngestNewTextMultyLevelProcess_StepTwo_AddNewRow_sp]');
-//       console.log("{" + i + "}: " + tempSubText);
-//       console.log("p:" + ((i / text.length) * 100).toFixed(2));
-//       tempSubText = "";
-//     }
-//   }
-
-//   await pool.request()
-//     .input('textid', sql.INT, id)
-//     .execute('[dbo].[IngestNewTextMultyLevelProcess_StepThree_ApplyUDP_sp]');
-
-//   console.dir(result2);
-//   pool.close();
-// } catch (err) {
-//   console.error(err);
-//   pool.close();
-// }
-// }
 
 module.exports = router;

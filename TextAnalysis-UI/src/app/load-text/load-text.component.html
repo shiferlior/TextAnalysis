@@ -8,17 +8,25 @@
                         <p class="alignright"><label for="textId">:טעינת מסמכים למערכת</label></p>
                         <input id="title" formControlName="title" style="margin-top: 2ex;" class="form-control"
                             type="text" dir="rtl" placeholder="כותרת">
-                        <input id="path" formControlName="path" style="margin-top: 2ex;"
-                            class="form-control" type="text" dir="rtl" placeholder="נתיב">
+                        <input id="path" formControlName="path" style="margin-top: 2ex;" class="form-control"
+                            type="text" dir="rtl" placeholder="נתיב">
                     </div>
-
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">טען</button>
+                        <div *ngIf='isNeedButtonLoad'>
+                            <button type="submit" class="btn btn-primary">טען</button>
+                        </div>
+                        <div *ngIf="isShowSpinner">
+                            <button class="btn btn-primary" type="button" disabled>
+                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                <span class="sr-only">טוען...</span>
+                            </button>
+                        </div>
+
+                        {{precent}}
                     </div>
+                    {{textSend}}
                 </div>
             </div>
         </div>
     </div>
 </form>
-
-{{precent}}

@@ -24,6 +24,11 @@ router.get('/', asyncHandler(async (req, res, next) => {
     res.send({ recordset: result.recordset });
 }));
 
+router.delete('/DeleteAllUserDefinedWordsGroup', asyncHandler(async (req, res, next) => {
+    let result = await db.runProc('[dbo].[DeleteAllUserDefinedWordsGroup_sp]');
+    res.send({ recordset: result.recordset });
+}));
+
 router.get('/:groupId/:textId', asyncHandler(async (req, res, next) => {
     let params = [
         ['groupid', sql.Int, req.params.groupId]

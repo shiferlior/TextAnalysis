@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DefinedWordsGroupService } from 'src/services/definedWordsGroup/defined-words-group.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
@@ -8,19 +9,28 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class XmlExportComponent implements OnInit {
 
-  xmlForm: FormGroup;
-  constructor(private formBuilder: FormBuilder) { }
+  xmlData: string;
+  constructor(private wordsGroupService: DefinedWordsGroupService) { }
 
   ngOnInit() {
-    this.xmlForm = this.formBuilder.group({
-      ingestedTexts: null,
-      userDefinedGroups: null,
-      userDefinedPhrases: null
-    });
   }
 
-  findByText(xmlPath) {
-    alert('asdsad');
+  handleClick1(event: Event) {
+    this.wordsGroupService.exportUserDefinedGroups().subscribe(res => {
+      this.xmlData = res.recordset["XML_F52E2B61-18A1-11d1-B105-00805F49916B"];
+    })
+  }
+
+  handleClick2(event: Event) {
+    this.wordsGroupService.exportUserDefinedPhrases().subscribe(res => {
+      this.xmlData = res.recordset["XML_F52E2B61-18A1-11d1-B105-00805F49916B"];
+    })
+  }
+
+  handleClick3(event: Event) {
+    this.wordsGroupService.exportIngestedTexts().subscribe(res => {
+      this.xmlData = res.recordset["XML_F52E2B61-18A1-11d1-B105-00805F49916B"];
+    })
   }
 
 }

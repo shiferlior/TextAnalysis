@@ -26,6 +26,15 @@ export class PhrasesGroupComponent implements OnInit {
       groupName: null
     });
   }
+
+  deleteClicked() {
+    this.wordsGroupService.deleteAllUserDefinedWordsGroup().subscribe(res => {
+      this.wordsGroupService.getUserDefinedGroupsList().subscribe(res => {
+        this.phrasesGroups = res.recordset;
+      });
+    });
+  }
+
   addPhrasesGroup(addPhrasesGroup: { groupName: string }) {
     this.wordsGroupService.createUserDefinedGroup(addPhrasesGroup)
       .subscribe(res => {
@@ -33,4 +42,5 @@ export class PhrasesGroupComponent implements OnInit {
         alert('success!');
       });
   }
+
 }

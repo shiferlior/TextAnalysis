@@ -25,6 +25,7 @@ import { SearchLinguisticExpressionComponent } from './search-linguistic-express
 import { AddPhraseToPhrasesGroupComponent } from './add-phrase-to-phrases-group/add-phrase-to-phrases-group.component';
 import { ShowContextPhraseComponent } from './show-context-phrase/show-context-phrase.component';
 import { XmlExportComponent } from './xml-export/xml-export.component';
+import { XmlImportComponent } from './xml-import/xml-import.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { XmlExportComponent } from './xml-export/xml-export.component';
     SearchLinguisticExpressionComponent,
     AddPhraseToPhrasesGroupComponent,
     ShowContextPhraseComponent,
-    XmlExportComponent
+    XmlExportComponent,
+    XmlImportComponent
   ],
   imports: [
     FormsModule,

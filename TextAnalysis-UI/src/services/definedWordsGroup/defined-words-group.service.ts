@@ -23,11 +23,56 @@ export class DefinedWordsGroupService {
     })
   };
 
+   // POST DefinedGroup
+   importUserDefinedGroups(xml: string): Observable<any> {
+    return this.http.post<any>(`${this.baseurl}/xml/ImportUserDefinedGroups`, JSON.stringify({xml}), this.httpOptions)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  // POST DefinedGroup
+  importUserDefinedPhrases(xml: string): Observable<any> {
+    return this.http.post<any>(`${this.baseurl}/xml/ImportUserDefinedPhrases`, JSON.stringify({xml}), this.httpOptions)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  // POST DefinedGroup
+  importIngestedTexts(xml: string): Observable<any> {
+    return this.http.post<any>(`${this.baseurl}/xml/ImportIngestedTexts`, JSON.stringify({xml}), this.httpOptions)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  // GET
+  exportUserDefinedGroups(): Observable<{ "recordset": { "XML_F52E2B61-18A1-11d1-B105-00805F49916B": string }}> {
+    return this.http.get<{ "recordset": { "XML_F52E2B61-18A1-11d1-B105-00805F49916B": string }}>
+      (`${this.baseurl}/xml/ExportUserDefinedGroups/`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  // GET
+  exportUserDefinedPhrases(): Observable<{ "recordset": { "XML_F52E2B61-18A1-11d1-B105-00805F49916B": string }}> {
+    return this.http.get<{ "recordset": { "XML_F52E2B61-18A1-11d1-B105-00805F49916B": string }}>
+      (`${this.baseurl}/xml/ExportUserDefinedPhrases/`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  // GET
+  exportIngestedTexts(): Observable<{ "recordset": { "XML_F52E2B61-18A1-11d1-B105-00805F49916B": string }}> {
+    return this.http.get<{ "recordset": { "XML_F52E2B61-18A1-11d1-B105-00805F49916B": string }}>
+      (`${this.baseurl}/xml/ExportIngestedTexts/`)
+      .pipe(catchError(this.errorHandler));
+  }
 
   // GET
   getUserDefinedGroupsList(): Observable<{ "recordset": [WordsGroup] }> {
     return this.http.get<{ "recordset": [WordsGroup] }>
       (`${this.baseurl}/definedWordsGroup/`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  // DELETE
+  deleteAllUserDefinedWordsGroup(): Observable<{ "recordset": [WordsGroup] }> {
+    return this.http.delete<{ "recordset": [WordsGroup] }>
+      (`${this.baseurl}/definedWordsGroup/DeleteAllUserDefinedWordsGroup`)
       .pipe(catchError(this.errorHandler));
   }
 

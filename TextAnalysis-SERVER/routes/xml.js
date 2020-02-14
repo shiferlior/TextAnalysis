@@ -6,31 +6,40 @@ const asyncHandler = require('express-async-handler');
 
 router.get('/ExportIngestedTexts', asyncHandler(async (req, res, next) => {
     let result = await db.runProc('[dbo].[ExportIngestedTexts_sp]',null);
-    console.log(111);
-    console.log(Object.keys(result.recordset[0])[0]);
-    res.send(typeof(result.recordset[0][Object.keys(result.recordset[0])[0]]));
+    res.send({ recordset: result.recordset[0]});
 }));
 
 router.get('/ExportUserDefinedGroups', asyncHandler(async (req, res, next) => {
     let result = await db.runProc('[dbo].[ExportUserDefinedGroups_sp]',null);
-    console.log(111);
-    console.log(Object.keys(result.recordset[0])[0]);
-    res.send(typeof(result.recordset[0][Object.keys(result.recordset[0])[0]]));
+    res.send({ recordset: result.recordset[0]});
 }));
 
 router.get('/ExportUserDefinedPhrases', asyncHandler(async (req, res, next) => {
     let result = await db.runProc('[dbo].[ExportUserDefinedPhrases_sp]',null);
-    console.log(111);
-    console.log(Object.keys(result.recordset[0])[0]);
-    res.send(typeof(result.recordset[0][Object.keys(result.recordset[0])[0]]));
+    res.send({ recordset: result.recordset[0]});
 }));
 
-router.post('/ExportUserDefinedPhrases', asyncHandler(async (req, res, next) => {
-    let result = await db.runProc('[dbo].[ExportUserDefinedPhrases_sp]',null);
-    console.log(111);
-    console.log(Object.keys(result.recordset[0])[0]);
-    res.send(typeof(result.recordset[0][Object.keys(result.recordset[0])[0]]));
+router.post('/ImportIngestedTexts', asyncHandler(async (req, res, next) => {
+    let result = await db.runProc('[dbo].[ImportIngestedTexts_sp]',[
+        ['udpxml', sql.Xml, req.body.xml]
+    ]);
+    res.send(result.recordset);
 }));
+
+router.post('/ImportUserDefinedGroups', asyncHandler(async (req, res, next) => {
+    let result = await db.runProc('[dbo].[ImportUserDefinedGroups_sp]',[
+        ['udpxml', sql.Xml, req.body.xml]
+    ]);
+    res.send(result.recordset);
+}));
+
+router.post('/ImportUserDefinedPhrases', asyncHandler(async (req, res, next) => {
+    let result = await db.runProc('[dbo].[ImportUserDefinedPhrases_sp]',[
+        ['udpxml', sql.Xml, req.body.xml]
+    ]);
+    res.send(result.recordset);
+}));
+
 
 
 module.exports = router;

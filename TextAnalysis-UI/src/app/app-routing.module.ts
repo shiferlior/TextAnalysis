@@ -17,6 +17,7 @@ import {SearchLinguisticExpressionComponent} from './search-linguistic-expressio
 import {AddPhraseToPhrasesGroupComponent} from './add-phrase-to-phrases-group/add-phrase-to-phrases-group.component';
 import {ShowContextPhraseComponent} from './show-context-phrase/show-context-phrase.component';
 import {XmlExportComponent} from './xml-export/xml-export.component';
+import {XmlImportComponent} from './xml-import/xml-import.component';
 
 const routes: Routes = [
   { path: 'getTexts', component: TextsComponent },
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'AddPhraseToPhrasesGroup/phrasesGroupId/:phrasesGroupId', component: AddPhraseToPhrasesGroupComponent },
   { path: 'ShowContextPhraseComponent/:phraseId', component: ShowContextPhraseComponent },
   { path: 'XmlExport', component: XmlExportComponent},
+  { path: 'XmlImport', component: XmlImportComponent},
   { path: '', redirectTo: '/getTexts', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];

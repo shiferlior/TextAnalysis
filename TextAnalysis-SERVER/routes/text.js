@@ -72,12 +72,12 @@ router.post('/stepOne/CreateTextEntity/', asyncHandler(async (req, res, next) =>
 
 
 router.post('/stepTwo/addNewRow/', asyncHandler(async (req, res, next) => {
-
+  
   let result = await db.runProc('[dbo].[IngestNewTextMultyLevelProcess_StepTwo_AddNewRow_sp]', [
     ['row', sql.NVarChar(sql.MAX), req.body.row],
     ['textid', sql.Int, req.body.textId]
   ]);
-
+  console.log(result);
   res.send({ recordset: result.recordset });
 }));
 
